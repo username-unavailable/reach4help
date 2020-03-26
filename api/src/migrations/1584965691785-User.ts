@@ -6,6 +6,7 @@ export class User1584965691785 implements MigrationInterface {
     id SERIAL NOT NULL,
     authentication_id INT NOT NULL,
     first_name VARCHAR NOT NULL,
+    middle_name VARCHAR,
     last_name VARCHAR NOT NULL,
     email VARCHAR NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
