@@ -4,11 +4,9 @@ import { ConnectionOptions } from 'typeorm/connection/ConnectionOptions';
 
 import * as config from './ormconfig';
 
-const connectionPromise = createConnection(config as ConnectionOptions);
-
 export const databaseProviders = [
   {
     provide: DATABASE_CONNECTION,
-    useFactory: async () => await connectionPromise,
+    useFactory: async () => await createConnection(config as ConnectionOptions),
   },
 ];
