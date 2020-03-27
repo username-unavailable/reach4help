@@ -1,26 +1,27 @@
+import { Button } from 'antd';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Button from 'src/components/Button/Buttons';
 
+import { decrementAction, fetchUsersAction, incrementAction, sumAction } from '../ducks/example';
 import { AppState } from '../store';
-import { decrementAction, incrementAction, incrementAsyncAction, sumAction } from '../store/example/actions';
 
 const ExampleContainer: React.FC = () => {
-  const value = useSelector((state: AppState) => state.exampleReducer.value);
+  const value = useSelector((state: AppState) => state.example.value);
+  const users = useSelector((state: AppState) => state.example.users);
   const dispatch = useDispatch();
 
   const increment = useCallback(
-    () => dispatch(incrementAction),
+    () => dispatch(incrementAction()),
     [dispatch],
   );
 
-  const incrementAsync = useCallback(
-    () => dispatch(incrementAsyncAction()),
+  const fetchUsers = useCallback(
+    () => dispatch(fetchUsersAction()),
     [dispatch],
   );
 
   const decrement = useCallback(
-    () => dispatch(decrementAction),
+    () => dispatch(decrementAction()),
     [dispatch],
   );
 
@@ -32,10 +33,12 @@ const ExampleContainer: React.FC = () => {
   return (
     <div>
       {value}
-      <Button type="button" color="#0F0" onClick={increment}>Increment</Button>
-      <Button type="button" onClick={incrementAsync}>Increment with Delay</Button>
-      <Button type="button" onClick={() => sum(5)}>Add 5</Button>
-      <Button type="button" color="#F00" onClick={decrement}>Decrement</Button>
+      <button type="button" style={{ backgroundColor: '#0F0' }} onClick={increment}>Increment</button>
+      <button type="button" onClick={fetchUsers}>Fetch users</button>
+      <button type="button" onClick={() => sum(5)}>Add 5</button>
+      <button type="button" style={{ backgroundColor: '#F00' }} onClick={decrement}>Decrement</button>
+      <Button type="primary" color="#F00" onClick={decrement}>Some button</Button>
+      {users.map((user: any) => user.email)}
     </div>
   );
 };
