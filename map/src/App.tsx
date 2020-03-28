@@ -1,10 +1,11 @@
 import React from 'react';
 import isEqual from 'lodash/isEqual';
 
-import styled from './styling';
+import styled, { SMALL_DEVICES } from './styling';
 
 import { Filter } from './data';
 
+import AddInstructions from './components/add-instructions';
 import { FilterMutator } from './components/filters';
 import Header from './components/header';
 import Footer from './components/footer';
@@ -26,6 +27,7 @@ interface State {
   selectedResult: MarkerInfo | null;
   updateResultsCallback: (() => void) | null;
   searchInput: HTMLInputElement | null;
+  addInstructionsOpen: boolean;
 }
 
 class App extends React.Component<Props, State> {
@@ -37,6 +39,7 @@ class App extends React.Component<Props, State> {
       selectedResult: null,
       updateResultsCallback: null,
       searchInput: null,
+      addInstructionsOpen: false,
     };
   }
 
@@ -66,6 +69,10 @@ class App extends React.Component<Props, State> {
     );
   };
 
+  private setAddInstructionsOpen = (addInstructionsOpen: boolean) => {
+    this.setState({ addInstructionsOpen });
+  };
+
   private updateResults = () => {
     const { updateResultsCallback } = this.state;
     if (updateResultsCallback) {
@@ -81,10 +88,15 @@ class App extends React.Component<Props, State> {
       nextResults,
       selectedResult,
       searchInput,
+      addInstructionsOpen,
     } = this.state;
     return (
       <div className={className}>
-        <Header filter={filter} updateFilter={this.setFilter} />
+        <Header
+          filter={filter}
+          updateFilter={this.setFilter}
+          setAddInstructionsOpen={this.setAddInstructionsOpen}
+        />
         <main>
           <div className="map-area">
             <MapLoader
@@ -116,7 +128,21 @@ class App extends React.Component<Props, State> {
             updateResults={this.updateResults}
           />
         </main>
+        <div className="mobile-message">
+          <p>
+            Unfortunately, this map has not been updated to work on devices with
+            small screens.
+          </p>
+          <p>
+            We are currently working on it, and should have an update out in the
+            coming days. Until then, please open page on a different device.
+          </p>
+        </div>
         <Footer />
+        <AddInstructions
+          open={addInstructionsOpen}
+          setAddInstructionsOpen={this.setAddInstructionsOpen}
+        />
       </div>
     );
   }
@@ -130,6 +156,7 @@ export default styled(App)`
   left: 0;
   display: flex;
   flex-direction: column;
+  color: ${p => p.theme.textColor};
 
   > main {
     display: flex;
@@ -170,5 +197,27 @@ export default styled(App)`
   .info-window {
     font-size: 1rem;
     font-weight: 400;
+  }
+
+  .mobile-message {
+    display: none;
+    padding: ${p => p.theme.spacingPx / 2}px;
+    font-size: 1.5rem;
+
+    p {
+      margin: 0;
+      padding: ${p => p.theme.spacingPx / 2}px;
+    }
+  }
+
+  ${SMALL_DEVICES} {
+    position: relative;
+
+    > main {
+      display: none;
+    }
+    .mobile-message {
+      display: block;
+    }
   }
 `;

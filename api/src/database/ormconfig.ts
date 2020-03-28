@@ -1,4 +1,7 @@
 import { parse } from 'pg-connection-string';
+import { config } from 'dotenv';
+
+config();
 
 require("dotenv").config();
 
