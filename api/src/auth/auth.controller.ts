@@ -1,7 +1,10 @@
-import { Controller, Request, Post, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Request, Post, UseGuards, Body } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
+import { CreateAuthDto } from './dto/create-auth.dto';
+import { AuthDto } from './dto/auth.dto';
+import Any = jasmine.Any;
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -9,8 +12,10 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  @Post()
+  @ApiOperation({ summary: 'Authenticate user' })
+  async authenticate(@Body() createAuthDto: CreateAuthDto): Promise<any> {
+    console.log("authenticate");
+    return this.authService.authenticate(createAuthDto);
   }
 }
