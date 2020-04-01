@@ -1,1 +1,2 @@
-declare module 'react-facebook-auth';
+// FIXME
+declare module "react-facebook-auth";

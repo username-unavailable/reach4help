@@ -1,1 +1,2 @@
-declare module 'miragejs';
+// FIXME
+declare module "miragejs";

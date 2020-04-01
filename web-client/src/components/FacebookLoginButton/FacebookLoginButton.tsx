@@ -1,7 +1,6 @@
-import { Button } from 'antd';
-import React from 'react';
-import FacebookAuth from 'react-facebook-auth';
-import { useTranslation } from 'react-i18next';
+import { Button } from "antd";
+import React from "react";
+import { useTranslation } from "react-i18next";
 
 const FBButton = (props: any) => {
   const { onClick } = props;
@@ -10,7 +9,7 @@ const FBButton = (props: any) => {
 
   return (
     <Button type="primary" onClick={onClick}>
-      {t('login.facebookButtonLabel')}
+      {t("login.facebookButtonLabel")}
     </Button>
   );
 };
@@ -19,14 +18,10 @@ interface FacebookLoginButtonProps {
 }
 
 const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
-  onAuthenticate,
+  onAuthenticate
 }): React.ReactElement => (
   <>
-    <FacebookAuth
-      appId={process.env.REACT_APP_FACEBOOK_APP_ID}
-      callback={onAuthenticate}
-      component={FBButton}
-    />
+    <FBButton onClick={onAuthenticate} />
   </>
 );
 

@@ -1,9 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
-import { AppState } from 'src/store';
+import React from "react";
+import { useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import { AppState } from "src/store";
 
-import { LOGIN_PATH } from './routes/LoginRoute/constants';
+import { LoginLocation } from "./routes/LoginRoute/constants";
 
 interface ProtectedPageProps {
   children: React.ReactNode;
@@ -15,8 +15,8 @@ const ProtectedPage: React.FC<ProtectedPageProps> = ({ children }) => {
 
   if (!token) {
     history.replace({
-      pathname: LOGIN_PATH,
-      state: { redirectBack: location.pathname },
+      pathname: LoginLocation.path,
+      state: { redirectBack: location.pathname }
     });
     return null;
   }
